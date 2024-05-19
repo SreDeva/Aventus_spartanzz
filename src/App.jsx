@@ -1,58 +1,25 @@
-import React, { useState, useEffect } from "react";
-import Hero from "./compo/Hero";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Navs from "./compo/Navbar";
-import Cardslide from "./compo/Cardslide";
-import Bigcard from "./compo/Bigcard";
-import Footer from "./compo/Footer";
-import Profilepage from "./components/Profilepage";
-import Dashboard from "./components/Dashboard";
-import Profile from "./components/Profile";
-import Chatbot from "./components/chatbot";
+import "./styles/Home.css";
+import { useAddress } from "@thirdweb-dev/react";
+import { ConnectWallet, Web3Button } from "@thirdweb-dev/react";
 
-function App() {
-  const [scrolled, setScrolled] = useState(false);
+import React, { useEffect } from 'react';
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
+export default function Home() {
 
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
+  const address=useAddress();
   return (
-    <Router>
-      <div>
-        <Navs scrolled={scrolled} />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <div>
-                <Hero />
-                <Cardslide />
-                <Bigcard />
-                <Footer />
-              </div>
-            }
-          />
-          <Route path="/chatg" element={<Chatbot />} />
-          <Route path="/profiles" element={<Profile />} />
-          <Route path="/dash" element={<Dashboard />} />
-        </Routes>
+    <main className="main">
+      <div className="container">
+        <ConnectWallet/>
+        <Web3Button contractAddress='0x7291497a76db9AaBaFD5B0a0dFC7373A4189028c'
+          action={ (contra)=>{
+              const data=contra.call("getCampaigns");
+              console.log(data);
+            }         
+        }
+        >hi
+        </Web3Button>
       </div>
-    </Router>
+    </main>
   );
 }
-
-export default App;

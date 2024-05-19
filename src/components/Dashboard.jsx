@@ -2,11 +2,34 @@ import React, { useRef } from "react";
 import "./Dashboard.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { Web3Button } from "@thirdweb-dev/react";
 import avatar from "./avatar.png";
-
+import {
+  useContract,
+  useContractWrite,
+  useContractRead,
+  useAddress,
+} from "@thirdweb-dev/react";
+import { ConnectWallet, Web3Button } from "@thirdweb-dev/react";
+let a = null;
 function MyVerticallyCenteredModal(props) {
   const val = useRef(null);
+  let contractAddress = "0xB7765fca8D09aF940f7D98f6bE92c9206531FF11";
+  const { contract } = useContract(contractAddress);
+  const { data, isloading } = useContractRead(contract, "users", [
+    useAddress(),
+  ]);
+  if (data) {
+    console.log(data);
+    const decimalValues = data.map((item) => {
+      // Convert hexadecimal to decimal
+      const decimalValue = BigInt(item._hex).toString();
+      a = decimalValue;
+      return decimalValue;
+    });
+
+    console.log("decimal value" + decimalValues);
+  }
+
   return (
     <Modal
       {...props}
@@ -45,7 +68,7 @@ function Dashboard() {
         </div>
       </div>
       <div className="dcard pcard">
-        <p>0x9cbf8.......454</p>
+        <p style={{ fontSize: "11px" }}>{useAddress()}</p>
         <h5>ADDRESS</h5>
       </div>
 
@@ -63,13 +86,16 @@ function Dashboard() {
         </div>
         <div className="dcard">
           <div className="one">
-            <h5>Transaction History</h5>
+            <h5>Balence</h5>
           </div>
           <div className="two">
             <p>
-              Effortlessly track lending and borrowing with our Transaction
-              History feature, offering concise insights into loans, repayments,
-              and asset movements
+              Effortlessly See details of data that your wallet contains:
+              <br />
+              USD :4.225
+              <br />
+              MORTGAGED ETH:0.5
+              <br />
             </p>
           </div>
         </div>

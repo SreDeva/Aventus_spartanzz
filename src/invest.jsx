@@ -106,7 +106,7 @@ function InvestPage() {
         <Web3Button
           style={buttonStyle}
           hoverStyle={buttonHoverStyle}
-          contractAddress="0xf3f04834128fA806AF03b19458A35fEf4Cfb580C"
+          contractAddress="0xB7765fca8D09aF940f7D98f6bE92c9206531FF11"
           action={(contra) => {
             contra.call("payEMI", [input3]);
           }}

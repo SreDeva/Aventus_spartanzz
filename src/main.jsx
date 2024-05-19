@@ -2,7 +2,9 @@ import React from "react";
 import { Sepolia } from "@thirdweb-dev/chains";
 import { createRoot } from "react-dom/client";
 import App from "./App";
+import "./index.css";
 import { ThirdwebProvider } from "@thirdweb-dev/react";
+import { ContractContext, ContractProvider } from "./context/ContractContext";
 
 // This is the chain your dApp will work on.
 // Change this to the chain your app is built for.
@@ -17,7 +19,9 @@ root.render(
       clientId={import.meta.env.VITE_TEMPLATE_CLIENT_ID}
       activeChain={Sepolia}
     >
-      <App />
+      <ContractProvider>
+        <App />
+      </ContractProvider>
     </ThirdwebProvider>
   </React.StrictMode>
 );
